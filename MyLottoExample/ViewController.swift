@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     var lottoNumbers: [Int] = []
     var lottoData: LottoData? = nil
     
-    var componentNumber = 986
+    var textFiledNumber = 986
     
     var round = 0 {
         didSet {
@@ -43,6 +43,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     
         viewConfig()
+        initLottoRound()
     }
     
     
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
         containerViewConfig()
         lottoRoundTextFiledConfig()
         lottoNumLabelConfig()
+        buttonConfig()
     }
 
     func containerViewConfig() {
@@ -77,6 +79,11 @@ class ViewController: UIViewController {
         }
     }
     
+    func buttonConfig() {
+        moneyButton.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 171/255, alpha: 1)
+        moneyButton.layer.cornerRadius = 10
+    }
+    
     func setLottoNumLabelBackgroundColor(number: Int, label: UILabel) {
         label.text = "\(number)"
         switch number {
@@ -89,7 +96,6 @@ class ViewController: UIViewController {
     }
     
     func fetchLottoNumberData(number: Int) {
-        
         guard let url = Constants.getLottoNumUrl(number: number) else {
             return
         }
@@ -133,6 +139,7 @@ class ViewController: UIViewController {
     }
     
     func updateLottoData(lottoData: LottoData) {
+        lottoRoundTextFiled.text = lottoData.drawNo
         lottoRoundLabel.text = lottoData.drawNo
         dateLabel.text = lottoData.drwNoDate
         
@@ -167,6 +174,33 @@ class ViewController: UIViewController {
         
         lottoRoundTextFiled.inputView = pickerView
     }
+    
+    func initLottoRound() {
+        //로또 1회차 2002년 12월 7일
+        let firstLottoNumDateComponents = DateComponents(year: 2002, month: 12, day: 7)
+        let firstDateCalandar = Calendar.current.date(from: firstLottoNumDateComponents)!
+                
+        let checkWeeks = Calendar.current.dateComponents([.weekOfMonth], from: firstDateCalandar, to: Date())
+
+        
+        if let roundWeek = checkWeeks.weekOfMonth {
+            let lastRound = roundWeek + 1
+            
+            let todayComponent = Calendar.current.dateComponents([.weekday, .hour], from: Date())
+            let weekday = todayComponent.weekday
+            let hour = todayComponent.hour
+            
+            //weekday -> 1 ~ 7로 월화수목금토일 표기, 일요일이 1, 토요일은 7
+            if weekday == 7 && hour! < 20 {
+                round = lastRound - 1
+                textFiledNumber = lastRound - 1
+            } else {
+                round = lastRound
+                textFiledNumber = lastRound
+            }
+        }
+        
+    }
 
     @IBAction func moneyButtonClicked(_ sender: UIButton) {
         guard let data = lottoData else {
@@ -180,22 +214,25 @@ class ViewController: UIViewController {
     }
 }
 
+
+// MARK: - PickerView Delegate
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return componentNumber
+        return textFiledNumber
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(componentNumber - row)"
+        return "\(textFiledNumber - row)"
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        round = componentNumber - row
+        round = textFiledNumber - row
         lottoRoundTextFiled.text = "\(round)"
+        print("\(round)")
         lottoRoundTextFiled.resignFirstResponder()
     }
 }
