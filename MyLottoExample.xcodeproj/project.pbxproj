@@ -13,6 +13,12 @@
 		1BDA02B72828CE8700E75205 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDA02B52828CE8700E75205 /* Main.storyboard */; };
 		1BDA02B92828CE8A00E75205 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDA02B82828CE8A00E75205 /* Assets.xcassets */; };
 		1BDA02BC2828CE8A00E75205 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDA02BA2828CE8A00E75205 /* LaunchScreen.storyboard */; };
+		1BDA02C52828CECA00E75205 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 1BDA02C42828CECA00E75205 /* SwiftyJSON */; };
+		1BDA02C82828CEF200E75205 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1BDA02C72828CEF200E75205 /* Alamofire */; };
+		1BDA02CA2828CFB400E75205 /* LottoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02C92828CFB400E75205 /* LottoData.swift */; };
+		1BDA02CD2828D11000E75205 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02CC2828D11000E75205 /* Constants.swift */; };
+		1BDA02CF2828DF4000E75205 /* APICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02CE2828DF4000E75205 /* APICall.swift */; };
+		1BDA02D12828E48300E75205 /* ViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02D02828E48300E75205 /* ViewController+Extentions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,10 @@
 		1BDA02B82828CE8A00E75205 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BDA02BB2828CE8A00E75205 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BDA02BD2828CE8A00E75205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BDA02C92828CFB400E75205 /* LottoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottoData.swift; sourceTree = "<group>"; };
+		1BDA02CC2828D11000E75205 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1BDA02CE2828DF4000E75205 /* APICall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICall.swift; sourceTree = "<group>"; };
+		1BDA02D02828E48300E75205 /* ViewController+Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extentions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BDA02C52828CECA00E75205 /* SwiftyJSON in Frameworks */,
+				1BDA02C82828CEF200E75205 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +68,27 @@
 		1BDA02AE2828CE8700E75205 /* MyLottoExample */ = {
 			isa = PBXGroup;
 			children = (
+				1BDA02D02828E48300E75205 /* ViewController+Extentions.swift */,
+				1BDA02CB2828D0DB00E75205 /* network */,
 				1BDA02AF2828CE8700E75205 /* AppDelegate.swift */,
 				1BDA02B12828CE8700E75205 /* SceneDelegate.swift */,
 				1BDA02B32828CE8700E75205 /* ViewController.swift */,
+				1BDA02C92828CFB400E75205 /* LottoData.swift */,
 				1BDA02B52828CE8700E75205 /* Main.storyboard */,
 				1BDA02B82828CE8A00E75205 /* Assets.xcassets */,
 				1BDA02BA2828CE8A00E75205 /* LaunchScreen.storyboard */,
 				1BDA02BD2828CE8A00E75205 /* Info.plist */,
 			);
 			path = MyLottoExample;
+			sourceTree = "<group>";
+		};
+		1BDA02CB2828D0DB00E75205 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				1BDA02CC2828D11000E75205 /* Constants.swift */,
+				1BDA02CE2828DF4000E75205 /* APICall.swift */,
+			);
+			name = network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +107,10 @@
 			dependencies = (
 			);
 			name = MyLottoExample;
+			packageProductDependencies = (
+				1BDA02C42828CECA00E75205 /* SwiftyJSON */,
+				1BDA02C72828CEF200E75205 /* Alamofire */,
+			);
 			productName = MyLottoExample;
 			productReference = 1BDA02AC2828CE8700E75205 /* MyLottoExample.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +139,10 @@
 				Base,
 			);
 			mainGroup = 1BDA02A32828CE8700E75205;
+			packageReferences = (
+				1BDA02C32828CECA00E75205 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				1BDA02C62828CEF200E75205 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 1BDA02AD2828CE8700E75205 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,8 +170,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BDA02D12828E48300E75205 /* ViewController+Extentions.swift in Sources */,
+				1BDA02CD2828D11000E75205 /* Constants.swift in Sources */,
 				1BDA02B42828CE8700E75205 /* ViewController.swift in Sources */,
+				1BDA02CF2828DF4000E75205 /* APICall.swift in Sources */,
 				1BDA02B02828CE8700E75205 /* AppDelegate.swift in Sources */,
+				1BDA02CA2828CFB400E75205 /* LottoData.swift in Sources */,
 				1BDA02B22828CE8700E75205 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +392,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BDA02C32828CECA00E75205 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		1BDA02C62828CEF200E75205 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BDA02C42828CECA00E75205 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BDA02C32828CECA00E75205 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		1BDA02C72828CEF200E75205 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BDA02C62828CEF200E75205 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1BDA02A42828CE8700E75205 /* Project object */;
 }
