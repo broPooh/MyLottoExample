@@ -14,9 +14,9 @@ class APICall {
     static let shared = APICall()
     
     
-    func getLotto(number: Int) {
+    func getLotto(round: String) {
         
-        guard let url = Constants.getLottoNumUrl(number: number) else {
+        guard let url = Constants.getLottoNumUrl(round: round) else {
             return
         }
         

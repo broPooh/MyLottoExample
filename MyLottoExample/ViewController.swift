@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     var round = 0 {
         didSet {
-            fetchLottoNumberData(number: round)
+            getLottoData(round: String(round))
         }
     }
     
@@ -44,6 +44,23 @@ class ViewController: UIViewController {
     
         viewConfig()
         initLottoRound()
+    }
+    
+    func getLottoData(round: String) {
+        guard let savedData = UserDefaultsManager.shared.getLottoData(round: round),
+              let drwNoDate = savedData["drwNoDate"] as? String,
+              let totSellamnt = savedData["totSellamnt"] as? String,
+              let firstAccumamnt = savedData["firstAccumamnt"] as? String,
+              let drwNo = savedData["drwNo"] as? String,
+              let numbers = savedData["numbers"] as? [String]
+        else {
+            fetchLottoNumberData(round: round)
+            return
+        }
+        
+        lottoData = LottoData(totSellamnt: totSellamnt, drwNoDate: drwNoDate, firstAccumamnt: firstAccumamnt, drawNo: drwNo, drwtNo1: numbers[0], drwtNo2: numbers[1], drwtNo3: numbers[2], drwtNo4: numbers[3], drwtNo5: numbers[4], drwtNo6: numbers[5], bnusNo: numbers[6])
+        
+        self.updateLottoData(lottoData: lottoData!)
     }
     
     
@@ -95,8 +112,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func fetchLottoNumberData(number: Int) {
-        guard let url = Constants.getLottoNumUrl(number: number) else {
+    func fetchLottoNumberData(round: String) {
+        guard let url = Constants.getLottoNumUrl(round: round) else {
             return
         }
         
@@ -110,28 +127,28 @@ class ViewController: UIViewController {
                 let totSellamnt = jsonData["totSellamnt"].stringValue
                 let drwNoDate = jsonData["drwNoDate"].stringValue
                 let firstAccumamnt = jsonData["firstAccumamnt"].stringValue
-                let drawNo = jsonData["drawNo"].stringValue
-                let drwtNo1 = jsonData["drwtNo1"].stringValue
-                let drwtNo2 = jsonData["drwtNo2"].stringValue
-                let drwtNo3 = jsonData["drwtNo3"].stringValue
-                let drwtNo4 = jsonData["drwtNo4"].stringValue
-                let drwtNo5 = jsonData["drwtNo5"].stringValue
-                let drwtNo6 = jsonData["drwtNo6"].stringValue
-                let bnusNo = jsonData["bnusNo"].stringValue
+                let drawNo = jsonData["drwNo"].stringValue
                 
-                self.lottoNumbers.append(Int(drwtNo1)!)
-                self.lottoNumbers.append(Int(drwtNo2)!)
-                self.lottoNumbers.append(Int(drwtNo3)!)
-                self.lottoNumbers.append(Int(drwtNo4)!)
-                self.lottoNumbers.append(Int(drwtNo5)!)
-                self.lottoNumbers.append(Int(drwtNo6)!)
-                self.lottoNumbers.append(Int(bnusNo)!)
-
-                self.lottoData = LottoData(totSellamnt: totSellamnt, drwNoDate: drwNoDate, firstAccumamnt: firstAccumamnt, drawNo: drawNo, drwtNo1: drwtNo1, drwtNo2: drwtNo2, drwtNo3: drwtNo3, drwtNo4: drwtNo4, drwtNo5: drwtNo5, drwtNo6: drwtNo6, bnusNo: bnusNo)
+                let numbersKey = ["drwtNo1","drwtNo2","drwtNo3","drwtNo4","drwtNo5","drwtNo6","bnusNo"]
+                let numbers = numbersKey.map { jsonData[$0].stringValue }
+                numbersKey.forEach { self.lottoNumbers.append(jsonData[$0].intValue) }
                 
+                
+                //UserDefault 저장 형태 [String : Any] -> LottoData
+                let saveLottoData : [String : Any] = [
+                    "drwNoDate" : drwNoDate,
+                    "totSellamnt" : totSellamnt,
+                    "firstAccumamnt" : firstAccumamnt,
+                    "drwNo" : drawNo,
+                    "numbers" : numbers
+                ]
+                
+                UserDefaultsManager.shared.setLottoData(round: drawNo, lottoData: saveLottoData)
+                                
+                self.lottoData = LottoData(totSellamnt: totSellamnt, drwNoDate: drwNoDate, firstAccumamnt: firstAccumamnt, drawNo: drawNo, drwtNo1: numbersKey[0], drwtNo2: numbersKey[1], drwtNo3: numbersKey[2], drwtNo4: numbersKey[3], drwtNo5: numbersKey[4], drwtNo6: numbersKey[5], bnusNo: numbersKey[6])
                 
                 self.updateLottoData(lottoData: self.lottoData!)
-                
+                                                
             case.failure(let error):
                 self.showErrorAlert(title: "네트워크 에러", message: "데이터를 받아오지 못했습니다.")
             }
@@ -150,19 +167,6 @@ class ViewController: UIViewController {
             setLottoNumLabelBackgroundColor(number: number, label: label)
         }
         
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//        lottoNumLabel1.text = lottoData.drwtNo1
-//
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo1)!, label: lottoNumLabel1)
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo2)!, label: lottoNumLabel2)
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo3)!, label: lottoNumLabel3)
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo4)!, label: lottoNumLabel4)
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo5)!, label: lottoNumLabel5)
-//        setLottoNumLabelBackgroundColor(number: Int(lottoData.drwtNo6)!, label: lottoNumLabel6)
     }
     
     func lottoRoundTextFiledConfig() {
@@ -192,6 +196,7 @@ class ViewController: UIViewController {
             
             //weekday -> 1 ~ 7로 월화수목금토일 표기, 일요일이 1, 토요일은 7
             if weekday == 7 && hour! < 20 {
+                //토요일 8시 로또번호 추첨, 밤 8시 이전에는 이전 회차 정보로
                 round = lastRound - 1
                 textFiledNumber = lastRound - 1
             } else {

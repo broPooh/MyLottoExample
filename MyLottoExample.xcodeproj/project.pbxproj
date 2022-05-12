@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B6366D6282C8DB100172A1A /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6366D5282C8DB100172A1A /* UserDefaultManager.swift */; };
 		1BDA02B02828CE8700E75205 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02AF2828CE8700E75205 /* AppDelegate.swift */; };
 		1BDA02B22828CE8700E75205 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02B12828CE8700E75205 /* SceneDelegate.swift */; };
 		1BDA02B42828CE8700E75205 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA02B32828CE8700E75205 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B6366D5282C8DB100172A1A /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		1BDA02AC2828CE8700E75205 /* MyLottoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLottoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BDA02AF2828CE8700E75205 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BDA02B12828CE8700E75205 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				1BDA02B12828CE8700E75205 /* SceneDelegate.swift */,
 				1BDA02B32828CE8700E75205 /* ViewController.swift */,
 				1BDA02C92828CFB400E75205 /* LottoData.swift */,
+				1B6366D5282C8DB100172A1A /* UserDefaultManager.swift */,
 				1BDA02B52828CE8700E75205 /* Main.storyboard */,
 				1BDA02B82828CE8A00E75205 /* Assets.xcassets */,
 				1BDA02BA2828CE8A00E75205 /* LaunchScreen.storyboard */,
@@ -172,6 +175,7 @@
 			files = (
 				1BDA02D12828E48300E75205 /* ViewController+Extentions.swift in Sources */,
 				1BDA02CD2828D11000E75205 /* Constants.swift in Sources */,
+				1B6366D6282C8DB100172A1A /* UserDefaultManager.swift in Sources */,
 				1BDA02B42828CE8700E75205 /* ViewController.swift in Sources */,
 				1BDA02CF2828DF4000E75205 /* APICall.swift in Sources */,
 				1BDA02B02828CE8700E75205 /* AppDelegate.swift in Sources */,
