@@ -58,6 +58,7 @@ class ViewController: UIViewController {
             return
         }
         
+        numbers.forEach { lottoNumbers.append(Int($0)!) }
         lottoData = LottoData(totSellamnt: totSellamnt, drwNoDate: drwNoDate, firstAccumamnt: firstAccumamnt, drawNo: drwNo, drwtNo1: numbers[0], drwtNo2: numbers[1], drwtNo3: numbers[2], drwtNo4: numbers[3], drwtNo5: numbers[4], drwtNo6: numbers[5], bnusNo: numbers[6])
         
         self.updateLottoData(lottoData: lottoData!)
